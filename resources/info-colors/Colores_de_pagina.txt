@@ -1,0 +1,12 @@
+Amarillo(GOLDENROD):
+#FFD369
+
+Azul Marino:
+#015668
+
+Azul mas denso:
+#263F44
+
+
+Colores de botones hover:
+Pantone silver 10077 -> #A6A9AA RGB(166,169,170)
