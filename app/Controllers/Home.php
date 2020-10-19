@@ -11,10 +11,10 @@ class Home extends BaseController
 		return view('header').view('portada').view('footer');
 	}
 
-	public function somos()
-	{
-		return view('header').view('somos').view('footer');
-	}
+	
+
+
+
 
 	//--------------------------------------------------------------------
 
