@@ -2,4 +2,6 @@
 
 # Projecto
 
-Plataforma web para el aprendizaje de herramientas tecnológicas, enfocada para aminorar la brecha tecnológica entre persona de tercera edad y las computadoras. 
+Plataforma web para el aprendizaje de herramientas tecnológicas, enfocada para aminorar la brecha tecnológica entre persona de tercera edad y las computadoras.
+
+Falta agregar Validacion del lado Servidor
