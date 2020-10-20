@@ -32,7 +32,7 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Somos/somos">Quienes Somos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#cursos">Cursos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#eventos">Eventos</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contáctenos</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Contactanos/contactanos">Contáctenos</a></li>
                     </ul>
                 </div>
             </div>
