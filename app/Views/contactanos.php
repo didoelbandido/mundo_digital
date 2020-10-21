@@ -101,7 +101,7 @@
         <div class="card-body">
 
         <div class="table-responsive" id="panelTbl">
-        <table id="tblComent" class="table table-striped table-bordered" style="width:100%" data-sort-name="f2" data-show-toggle="true" data-search="true" data-pagination="true"  data-page-list="[10, 25, 50, 100, all]" >
+        <table id="tblComent" class="table table-striped table-bordered" style="width:100%" data-sort-name="f2" data-show-toggle="true" data-search="true"  data-pagination="true" >
         <thead>
             <tr>
                 <th data-field="state" data-radio="true"></th>
