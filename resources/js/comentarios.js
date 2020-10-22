@@ -1,11 +1,13 @@
 function doaction()
 {
  
-
+    
     $("#error").hide()
     $("#succ").hide()
     $('#panelTbl').hide()
     $('#tbl_error').hide()
+
+   
 
     $('#frmCon').submit(function()
     {
@@ -26,6 +28,8 @@ function doaction()
                     $('#msg_ok').html(e.ok)
                     $('#frmCon')[0].reset()
                     setTimeout(function(){ $("#succ").hide() }, 6000)
+                    
+                   
                 }
                 else
                 {
@@ -41,6 +45,7 @@ function doaction()
 
     $('#btnMostrar').click(function(){
         $('#tbl_error').hide()
+        
 
         $.ajax({
 
@@ -50,6 +55,9 @@ function doaction()
             data: {},
             success: function(e)
             {
+                $('#panelTbl').bootstrapTable("destroy")
+                $('#panelTbl').bootstrapTable({data: e.data})
+
                if(e.data.length>0){
                     $('#panelTbl').show()
                     $(function(){

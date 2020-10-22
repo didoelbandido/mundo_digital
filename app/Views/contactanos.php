@@ -1,16 +1,5 @@
 
 
-<script src="<?= base_url()?>/resources/js/comentarios.js"></script>
-<script>
-    ruta = '<?= base_url()?>'
-    $(document).ready(function()
-    {
-        
-        doaction();
-    }
-    )
-</script>
-
 <br>
 <br>
 
@@ -94,6 +83,7 @@
                 <div class="col-md-4  align-self-center text-center ">
                 <button type="button" name="btnMostrar" id="btnMostrar" class=" btn btn-primary ">Mostrar</button>
                 <button type="button" name="btnOcultar" id="btnOcultar" class="btn btn-danger">Ocultar</button>
+                <button id="button" class="btn btn-secondary">refresh</button>
                 </div>
                    
            </div>
@@ -101,7 +91,7 @@
         <div class="card-body">
 
         <div class="table-responsive" id="panelTbl">
-        <table id="tblComent" class="table table-striped table-bordered" style="width:100%" data-sort-name="f2" data-show-toggle="true" data-search="true"  data-pagination="true" >
+        <table id="tblComent" class="table table-striped table-bordered" style="width:100%" data-sort-name="f2" data-show-toggle="true" data-search="true"  data-pagination="true"   >
         <thead>
             <tr>
                 <th data-field="state" data-radio="true"></th>
@@ -131,6 +121,27 @@
 
 <!-- Poner Estatico el navBar -->
         <script >
+    ruta = '<?= base_url()?>'
+    $div = $("#panelTbl");
+    $table = $('#tblComent')
+     $button = $('#button')
+     $(function() {
+    $button.click(function () {
+        
+        $table.on('load-success.bs.table', function() {
+    // your code to get data
+        });
+
+
+      console.log('Si pasa')
+      
+    })
+
+    
+
+  })
+
+
 $(document).ready(function(){
     $('#mainNav').addClass('navbar-shrink');
 	var altura = $('#mainNav').offset().top;
@@ -141,9 +152,14 @@ $(document).ready(function(){
 		} else {
 			$('#mainNav').addClass('navbar-shrink');
 		}
-	});
+    });
+    
+
+    doaction();
 
 });
 
 
 </script>
+
+<script src="<?= base_url()?>/resources/js/comentarios.js"></script>
