@@ -1,3 +1,6 @@
+
+DROP DATABASE IF EXISTS db_mundodigital;
+
 create database if not exists db_mundodigital;
 use db_mundodigital;
 
