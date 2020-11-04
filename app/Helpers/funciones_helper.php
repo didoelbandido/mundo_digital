@@ -1,4 +1,4 @@
-03:56:41
+
 <?php
 function generarcombo($data)
 {$comb=array();

@@ -51,7 +51,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Somos">Quienes Somos</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#cursos">Cursos</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Curso">Cursos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#eventos">Eventos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Contactanos">Comentarios</a></li>
                     </ul>
