@@ -9,9 +9,12 @@
             <h3 class="section-subheading text-muted">En esta seccion podras observar todos los cursos disponibles.</h3>
         </div>
 </div>
+
 <div class="container">
 <div class="card">
-  
+  <div class="card-header text-right bg-dark">
+  <button type="button" class="btn btn-primary">Agregar</button>  
+  </div>
   <div class="card-body">
     <h5 class="card-title">Special title treatment</h5>
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
