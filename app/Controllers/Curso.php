@@ -8,14 +8,18 @@ class Curso extends BaseController
 
     public function __construct()
     {
-        helper(['form','url']);
+        helper(['form','url','funciones']);
     }
 
     // Mostrar la Vista
     public function index()
     {
-        return view('header').view('cursoView').view('footer');
+        $modelo = new CursoModel($db);
+        $data['comboestado']=generarcombo($modelo->comboEstado());
+        return view('header').view('cursoView',$data).view('footer');
     }
+
+ 
 
     // Mudulo de Resgistro
     public function doSave()
@@ -25,41 +29,46 @@ class Curso extends BaseController
         
         
       $input = $this->validate([
-            'nombre' => [
-            'rules'  => 'required|min_length[6]|alpha_space',
+            'nombreCurso' => [
+            'rules'  => 'required|alpha_space',
             'errors' => [
-                'required' => 'Debe ingresar un nombre.',
-                'min_length' => 'El nombre debe tener minimo 6 caracteres',
+                'required' => 'Debe ingresar un nombre del curso.',
                 'alpha_space'=> 'El nombre solo debe contener letras'
             ]
              ]           
             ,
-            'email' => [
-                'rules' => 'required|min_length[5]|valid_email',
+            'desCurso' => [
+                'rules' => 'required|min_length[20]',
                 'errors' => [
-                    'required'=> 'Debe Ingresar un correo',
-                    'min_length'=> 'Como minimo debe tener mas de 5 caracteres el email',
-                    'valid_email'=> 'Debe ser un correo valido'
+                    'required'=> 'Debe Ingresar un descripcion del curso',
+                    'min_length'=> 'Como minimo debe tener mas de 20 caracteres la descripcion del curso',
 
                 ]
             ],            
-            'phone' => [
-                'rules'=> 'required|exact_length[9]|integer',
+            'docenteCurso' => [
+                'rules'=> 'required|alpha_space',
                 'errors'=>[
-                    'required'=> 'Debe ingresar un numeor celular',
-                    'exact_length'=>'Ingrese un numero de celular valido',
-                    'integer'=>'Solo Numeros en el campo de celular'
+                    'required' => 'Debe ingresar un nombre del docente del curso.',
+                    'alpha_space'=> 'El nombre solo debe contener letras'
                 ]
             ],
-            'message' => [
-                'rules'=>'required|min_length[15]',
+            'estadoCurso' => [
+                'rules'=>'required|numeric',
                 'errors'=>[
-                    'required'=>'Debe ingresar un mensaje',
-                    'min_length'=>'Ingrese un mensaje que tenga mas de 1 palabra'
+                    'required'=>'Debe ingresar el estado del curso',
+                    'numeric'=>'Solo se acepta numeros'
                 ]
-            ]
-            
-            
+            ],
+            'fotoCurso' => [
+                 'uploaded[fotoCurso]',
+                 'mime_in[fotoCurso,image/jpg,image/jpeg,image/png]',
+                 'max_size[fotoCurso,1024]',
+                 'errors'=>[
+                    'uploaded'=> 'No se envio una imagen',
+                    'mime_in' => 'No se envio un formato aceptado(jpg,jpeg,png)',
+                    'max_size' => 'La imagen nodebe exceder de 1mb'
+                 ]
+             ]
         ]);
 
         if(!$input)
@@ -71,17 +80,20 @@ class Curso extends BaseController
         else
         {
             $req = \Config\Services::request();
-            $nombre = $req -> getPostGet('nombre');
-            $email = $req -> getPostGet('email');
-            $phone = $req -> getPostGet('phone');
-            $message = $req -> getPostGet('message');
+            $nombreCurso = $req -> getPostGet('nombreCurso');
+            $desCurso = $req -> getPostGet('desCurso');
+            $docenteCurso = $req -> getPostGet('docenteCurso');
+            $estadoCurso = $req -> getPostGet('estadoCurso');
+            $img = $this -> request -> getFile('fotoCurso');
+            $fot = $img->getRandomName();
+            $img->move(ROOTPATH.'resources/upload',$fot);
             // Orden de la data del procedimiento almacenado
-            $data = array($nombre,$email,$phone,$message);
+            $data = array($nombreCurso,$desCurso,$docenteCurso,$estadoCurso,$fot);
             // Llamando al modelo
-            $modelo = new ContactanosModel($db);
+            $modelo = new CursoModel($db);
 
             // Verificando si la transaccion se realizo
-            if($modelo->mensajeRegistrar($data))
+            if($modelo->cursoRegistrar($data))
             {
                 $respuesta['error'] = "";
                 $respuesta['ok'] = "Operacion realizada!";
