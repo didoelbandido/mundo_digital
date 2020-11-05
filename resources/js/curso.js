@@ -4,6 +4,7 @@ function doaction()
     
     $("#error").hide()
     $("#succ").hide()
+    $("#panelCursos").hide()
 
 
    
@@ -44,8 +45,30 @@ function doaction()
             })
 
         return false
-    }
-    )
+    })
+
+
+    $('#btn_mostrar').click(function(){
+        
+        
+
+        $.ajax({
+
+            url: ruta+'/Curso/doList',
+            type: 'POST',
+            dataType:'JSON',
+            data: {},
+            success: function(e)
+            {
+                   
+               $('#panelCursos').show()
+               $('#objCursos').html(e.data)
+               
+            }
+            })
+
+
+    })
 
     
 

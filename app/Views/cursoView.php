@@ -14,19 +14,23 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cursoModal">
 <i class="fas fa-plus-square"></i> AGREGAR
 </button>
+<button type="button" class="btn btn-primary" id="btn_mostrar">
+<i class="fas fa-eye"></i> MOSTRAR
+</button>
 
 </div>
 </div>
 
+<!-- Creando los card de los curso -->
+<div class="container border"  id="panelCursos">
 
-<div class="container">
-<div class="card">
+<div class="row" id="objCursos">
 
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+
+
+  
+  
+  
 </div>
 </div>
 </section>
@@ -73,8 +77,8 @@
                   <div class="form-group">
                     <label for="fotoCurso">Foto</label>
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="fotoCurso" name="fotoCurso" lang="es">
-                      <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                      <input type="file" class="custom-file-input" id="fotoCurso" name="fotoCurso">
+                      <label class="custom-file-label" for="fotoCurso">Buscar Imagen .jpg, .jpeg o .png</label>
                     </div>
                   </div>
     
@@ -96,7 +100,11 @@
 <script>
     ruta = '<?= base_url() ?>'
 
-
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
 
 
 

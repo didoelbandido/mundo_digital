@@ -28,5 +28,16 @@ class CursoModel extends Model
 
     }
 
+    public function listar()
+    {
+        $db = \Config\Database::connect();
+        $qry = "Call sp_listar_curso()";
+        $rel = $db->query($qry);
+        $db->close();
+        return $rel->getResultArray();
+
+
+    }
+
 
 }
