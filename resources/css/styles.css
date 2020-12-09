@@ -10514,3 +10514,21 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+#circulo {
+	width: 10rem;
+	height: 10rem;
+	border-radius: 50%;
+	background: red;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+#circulo > p {
+	font-family: sans-serif;
+	color: white;
+	font-size: 4rem;
+  font-weight: bold;
+  
+}

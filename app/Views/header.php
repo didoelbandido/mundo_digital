@@ -52,8 +52,9 @@
                     <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Somos">Quienes Somos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Curso">Cursos</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#eventos">Eventos</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Evento">Eventos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Contactanos">Comentarios</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/IniciarSesion">Iniciar Sesion</a></li>
                     </ul>
                 </div>
             </div>

@@ -57,6 +57,35 @@ insert into `curso` (`idcurso`,`nombre`,`descripcion`,`docente`,`estado`,`foto`)
 
 
 
+-- Creando  tabla estado
+DROP TABLE IF EXISTS `estado_evento`;
+CREATE TABLE `estado_evento` (
+  `codestado` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`codestado`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+insert into `estado_evento` (`codestado`,`descripcion`) values
+(1,'Online'),
+(2,'Presencial');
+
+
+
+-- Creando tabla de Evento
+drop table if exists  `evento`;
+create table `evento`(
+`idevento` char(6) not null unique,
+`nombre` varchar(50) not null,
+`descripcion` text not null,
+`estado` int(10) unsigned NOT NULL,
+`foto` varchar(200) null,
+ PRIMARY KEY (`idevento`) USING BTREE,
+ KEY `FK_evento_1` (`estado`),
+CONSTRAINT `FK_evento_1` FOREIGN KEY (`estado`) REFERENCES `estado_evento` (`codestado`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+insert into `evento` (`idevento`,`nombre`,`descripcion`,`estado`,`foto`) values
+('EVN001','Infomatica para Grandes','Es un evento que te practico',1,null);
+
 
 
 -- Procedimientos almacenados
@@ -181,7 +210,18 @@ DELIMITER ;
 
 
 
+-- Listar Estado_Evento
 
+DROP PROCEDURE IF EXISTS `sp_listar_estado_evento`;
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_estado_evento`()
+BEGIN
+select codestado f1,descripcion f2 from estado_evento ;
+END $$
+
+DELIMITER ;
 
 
 
