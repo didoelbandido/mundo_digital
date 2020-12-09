@@ -223,9 +223,56 @@ END $$
 
 DELIMITER ;
 
+-- Registrar un nuevo evento
+
+drop procedure if exists `sp_registrar_evento`;
+
+delimiter $$
+
+create definer=`root`@`localhost` procedure `sp_registrar_evento`(
+in v_nombre VARCHAR(50),
+in v_descripcion text,
+in v_estado int(10),
+in v_foto varchar(200),
+out v_res bool)
+begin 
+declare exit handler for sqlexception
+begin rollback;
+set v_res=false;
+end;
+
+start transaction;
+begin
+declare num  int;
+declare id char(6);
+set num=(Select count(*)+1 from evento);
+set id = concat(left('EVN00', 6 - char_length(num)),num);
+insert into evento(idevento,nombre,descripcion,estado,foto)values
+(id,upper(v_nombre),v_descripcion,v_estado,v_foto);
+end;
+commit;
+set v_res=true;
+
+end $$
+
+DELIMITER ;
 
 
+-- Listar eventos
 
+DROP PROCEDURE IF EXISTS `sp_listar_evento`;
+
+DELIMITER $$
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_evento`()
+BEGIN
+select c.idevento f1, c.nombre f2, c.descripcion f3,  ev.descripcion f5, c.foto f6
+from evento c inner join estado_evento ev on c.estado=ev.codestado;
+END $$
+
+
+DELIMITER ;
 
 
 

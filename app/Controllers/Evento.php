@@ -30,33 +30,32 @@ class Evento extends BaseController
         
         
       $input = $this->validate([
-            'nombreCurso' => [
+            'nombreEvento' => [
             'rules'  => 'required|alpha_space',
             'errors' => [
-                'required' => 'Debe ingresar un nombre del curso.',
+                'required' => 'Debe ingresar un nombre del Evento.',
                 'alpha_space'=> 'El nombre solo debe contener letras'
             ]
-             ]           
-            ,
-            'desCurso' => [
+             ],
+            'desEvento' => [
                 'rules' => 'required|min_length[20]',
                 'errors' => [
-                    'required'=> 'Debe Ingresar un descripcion del curso',
-                    'min_length'=> 'Como minimo debe tener mas de 20 caracteres la descripcion del curso',
+                    'required'=> 'Debe Ingresar un descripcion del Evento',
+                    'min_length'=> 'Como minimo debe tener mas de 20 caracteres la descripcion del Evento',
 
                 ]
             ],            
-            'estadoCurso' => [
+            'estadoEvento' => [
                 'rules'=>'required|numeric',
                 'errors'=>[
-                    'required'=>'Debe ingresar el estado del curso',
+                    'required'=>'Debe ingresar el estado del Evento',
                     'numeric'=>'Solo se acepta numeros'
                 ]
             ],
-            'fotoCurso' => [
-                 'uploaded[fotoCurso]',
-                 'mime_in[fotoCurso,image/jpg,image/jpeg,image/png]',
-                 'max_size[fotoCurso,1024]',
+            'fotoEvento' => [
+                 'uploaded[fotoEvento]',
+                 'mime_in[fotoEvento,image/jpg,image/jpeg,image/png]',
+                 'max_size[fotoEvento,1024]',
                  'errors'=>[
                     'uploaded'=> 'No se envio una imagen',
                     'mime_in' => 'No se envio un formato aceptado(jpg,jpeg,png)',
@@ -74,20 +73,19 @@ class Evento extends BaseController
         else
         {
             $req = \Config\Services::request();
-            $nombreCurso = $req -> getPostGet('nombreCurso');
-            $desCurso = $req -> getPostGet('desCurso');
-            $docenteCurso = $req -> getPostGet('docenteCurso');
-            $estadoCurso = $req -> getPostGet('estadoCurso');
-            $img = $this -> request -> getFile('fotoCurso');
+            $nombreEvento = $req -> getPostGet('nombreEvento');
+            $desEvento = $req -> getPostGet('desEvento');
+            $estadoEvento = $req -> getPostGet('estadoEvento');
+            $img = $this -> request -> getFile('fotoEvento');
             $fot = $img->getRandomName();
             $img->move(ROOTPATH.'resources/upload',$fot);
             // Orden de la data del procedimiento almacenado
-            $data = array($nombreCurso,$desCurso,$docenteCurso,$estadoCurso,$fot);
+            $data = array($nombreEvento,$desEvento,$estadoEvento,$fot);
             // Llamando al modelo
-            $modelo = new CursoModel($db);
+            $modelo = new EventoModel($db);
 
             // Verificando si la transaccion se realizo
-            if($modelo->cursoRegistrar($data))
+            if($modelo->eventoRegistrar($data))
             {
                 $respuesta['error'] = "";
                 $respuesta['ok'] = "Operacion realizada!";
@@ -110,77 +108,77 @@ class Evento extends BaseController
     }
 
 
-    // // Listar los Curso
-    // public function doList()
-    // {
-    //     $cadena="";
-    //     $respuesta = array();
-    //     $modelo = new CursoModel($db);
-    //     $lista=$modelo->listar();
-    //     foreach ($lista as $row) {
-    //     $cadena.='                       <div class="col-lg-3 col-sm-5 mb-3 mb-lg-0 p-3">';
-    //     $cadena.='                <div class="portfolio-item">';
-    //     $cadena.='                        <a class="portfolio-link" data-toggle="modal" href="#portfolio'.$row['f1'].'">';
+    // Listar los Evento
+    public function doList()
+    {
+        $cadena="";
+        $respuesta = array();
+        $modelo = new EventoModel($db);
+        $lista=$modelo->listar();
+        foreach ($lista as $row) {
+        $cadena.='                       <div class="col-lg-3 col-sm-5 mb-3 mb-lg-0 p-3">';
+        $cadena.='                <div class="portfolio-item">';
+        $cadena.='                        <a class="portfolio-link" data-toggle="modal" href="#portfolio'.$row['f1'].'">';
 
-    //     if($row['f6'] == null)
-    //     {
-    //         $cadena.='                        <img class="img-fluid" src="'.base_url().'/resources/upload/logo_banner.png'.'" alt="imagen_del_curso" />';            
-    //     }
-    //     else
-    //     {
-    //         $cadena.='                        <img class="img-fluid" src="'.base_url().'/resources/upload/'.$row['f6'].'" alt="imagen_del_curso" />';
-    //     }
+        if($row['f6'] == null)
+        {
+            $cadena.='                        <img class="img-fluid" src="'.base_url().'/resources/upload/logo_banner.png'.'" alt="imagen_del_Evento" />';            
+        }
+        else
+        {
+            $cadena.='                        <img class="img-fluid" src="'.base_url().'/resources/upload/'.$row['f6'].'" alt="imagen_del_Evento" />';
+        }
 
         
-    //     $cadena.='                       </a>';
-    //     $cadena.='                          <div class="portfolio-caption">';
-    //     $cadena.='                               <div class="portfolio-caption-heading">'.$row['f2'].'</div>';
-    //     $cadena.='                             <div class="portfolio-caption-subheading text-muted">Avanzado</div>'; //cambiar por la columna correspondiente con la nueva db
-    //     $cadena.='                         </div>';
-    //     $cadena.='                     </div>';
-    //     $cadena.='             </div>';
-    //     $cadena.='             <div class="portfolio-modal modal fade" id="portfolio'.$row['f1'].'" tabindex="-1" role="dialog" aria-hidden="true">';
-    //     $cadena.='                         <div class="modal-dialog">';
-    //     $cadena.='                            <div class="modal-content">';
-    //     $cadena.='                                 <div class="close-modal" data-dismiss="modal"><i class="fas fa-window-close"></i></div>';
-    //     $cadena.='                                 <div class="container">';
-    //     $cadena.='                                      <div class="row justify-content-center">';
-    //     $cadena.='                                         <div class="col-lg-8">';
-    //     $cadena.='                                              <div class="modal-body">';
-    //     $cadena.='                                                  <h2 class="text-uppercase">'.$row['f2'].'</h2>';
-    //     $cadena.='                                                 <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>';//cambiar por la columna correspondiente con la nueva db
-    //     if($row['f6'] == null)
-    //     {
-    //         $cadena.='                                                <img class="img-fluid d-block mx-auto" src="'.base_url().'/resources/upload/logo_banner.png'.'" alt="" />';
-    //     }
-    //     else
-    //     {
-    //         $cadena.='                                                <img class="img-fluid d-block mx-auto" src="'.base_url().'/resources/upload/'.$row['f6'].'" alt="" />';
-    //     }
+        $cadena.='                       </a>';
+        $cadena.='                          <div class="portfolio-caption">';
+        $cadena.='                               <div class="portfolio-caption-heading">'.$row['f2'].'</div>';
+        $cadena.='                             <div class="portfolio-caption-subheading text-muted">Avanzado</div>'; //cambiar por la columna correspondiente con la nueva db
+        $cadena.='                         </div>';
+        $cadena.='                     </div>';
+        $cadena.='             </div>';
+        $cadena.='             <div class="portfolio-modal modal fade" id="portfolio'.$row['f1'].'" tabindex="-1" role="dialog" aria-hidden="true">';
+        $cadena.='                         <div class="modal-dialog">';
+        $cadena.='                            <div class="modal-content">';
+        $cadena.='                                 <div class="close-modal" data-dismiss="modal"><i class="fas fa-window-close"></i></div>';
+        $cadena.='                                 <div class="container">';
+        $cadena.='                                      <div class="row justify-content-center">';
+        $cadena.='                                         <div class="col-lg-8">';
+        $cadena.='                                              <div class="modal-body">';
+        $cadena.='                                                  <h2 class="text-uppercase">'.$row['f2'].'</h2>';
+        $cadena.='                                                 <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>';//cambiar por la columna correspondiente con la nueva db
+        if($row['f6'] == null)
+        {
+            $cadena.='                                                <img class="img-fluid d-block mx-auto" src="'.base_url().'/resources/upload/logo_banner.png'.'" alt="" />';
+        }
+        else
+        {
+            $cadena.='                                                <img class="img-fluid d-block mx-auto" src="'.base_url().'/resources/upload/'.$row['f6'].'" alt="" />';
+        }
         
-    //     $cadena.='                                                 <p>'.$row['f3'].'</p>';
-    //     $cadena.='                                                  <ul class="list-inline">';
-    //     $cadena.='                                                    <li>Date: January 2020</li>';//cambiar con la nueva db
-    //     $cadena.='                                                    <li>Docente: '.$row['f4'].'</li>';
-    //     $cadena.='                                                    <li>Category: Branding</li>';//cambiar con la nueva db
-    //     $cadena.='                                                </ul>';
-    //     $cadena.='                                                <button class="btn btn-primary" data-dismiss="modal" type="button">';
-    //     $cadena.='                                                    <i class="fas fa-times mr-1"></i>';
-    //     $cadena.='                                                    Cerrar Ventana';
-    //     $cadena.='                                                 </button>';
-    //     $cadena.='                                             </div>';
-    //     $cadena.='                                         </div>';
-    //     $cadena.='                                     </div>';
-    //     $cadena.='                                 </div>';
-    //     $cadena.='                             </div>';
-    //     $cadena.='                         </div>';
-    //     $cadena.='                     </div>';
-    //     }
-    //     $respuesta['data']=$cadena;
+        $cadena.='                                                 <p>'.$row['f3'].'</p>';
+        $cadena.='                                                  <ul class="list-inline">';
+        $cadena.='                                                    <li>Date: January 2020</li>';//cambiar con la nueva db
+        // $cadena.='                                                    <li>Docente: '.$row['f4'].'</li>';
+        $cadena.='                                                    <li>Category: Branding</li>';//cambiar con la nueva db
+        $cadena.='                                                </ul>';
+        $cadena.='                                                <button class="btn btn-primary" data-dismiss="modal" type="button">';
+        $cadena.='                                                    <i class="fas fa-times mr-1"></i>';
+        $cadena.='                                                    Cerrar Ventana';
+        $cadena.='                                                 </button>';
+        $cadena.='                                             </div>';
+        $cadena.='                                         </div>';
+        $cadena.='                                     </div>';
+        $cadena.='                                 </div>';
+        $cadena.='                             </div>';
+        $cadena.='                         </div>';
+        $cadena.='                     </div>';
+        }
+        $respuesta['data']=$cadena;
         
-    //     header('Content-Type: application/x-json; charset=utf-8');
-    //     echo(json_encode($respuesta));
-    // }
+        header('Content-Type: application/x-json; charset=utf-8');
+        echo(json_encode($respuesta));
+    }
 
 
 

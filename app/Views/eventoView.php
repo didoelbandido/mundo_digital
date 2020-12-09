@@ -55,7 +55,7 @@
         </div>
         <?php $validation = \Config\Services::validation();?>
 
-                <?=form_open_multipart('#', array('id' => 'frmCurso', 'name' => 'frmCurso'))?>
+                <?=form_open_multipart('#', array('id' => 'frmEvento', 'name' => 'frmEvento'))?>
                 <div class="form-group">
                     <label for="nombreEvento">Nombre</label>
                     <input type="text" class="form-control" id="nombreEvento" name="nombreEvento" aria-describedby="nombreEventoHelp" placeholder="Ingresar el nombre del Evento">
@@ -66,7 +66,7 @@
                   </div>
                   <div class="form-group">
                     <label for="estadoEvento">Estado</label>
-                   <?php  echo form_dropdown('estadoCurso',$comboestado,'#','class="selectpicker form-control" id="estadoCurso" data-live-search="true" title="Seleccionar estado" required'); ?>
+                   <?php  echo form_dropdown('estadoEvento',$comboestado,'#','class="selectpicker form-control" id="estadoEvento" data-live-search="true" title="Seleccionar estado" required'); ?>
                    
                   </div>
 
@@ -83,7 +83,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="agregarCurso" >Guardar</button>
+        <button type="button" class="btn btn-success" id="agregarEvento" >Guardar</button>
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@
 
 
 
-<script src="<?= base_url() ?>/resources/js/curso.js"></script>
+<script src="<?= base_url() ?>/resources/js/evento.js"></script>
 
 <script>
     ruta = '<?= base_url() ?>'
