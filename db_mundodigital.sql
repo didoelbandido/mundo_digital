@@ -84,12 +84,16 @@ create table `evento`(
 `descripcion` text not null,
 `estado` int(10) unsigned NOT NULL,
 `foto` varchar(200) null,
+`obje` text not null,
+`link` text not null,
+`dia` text not null,
+`Mes` text not null,
  PRIMARY KEY (`idevento`) USING BTREE,
  KEY `FK_evento_1` (`estado`),
 CONSTRAINT `FK_evento_1` FOREIGN KEY (`estado`) REFERENCES `estado_evento` (`codestado`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-insert into `evento` (`idevento`,`nombre`,`descripcion`,`estado`,`foto`) values
-('EVN001','Infomatica para Grandes','Es un evento que te practico',1,null);
+insert into `evento` (`idevento`,`nombre`,`descripcion`,`estado`,`foto`,`obje`,`link`,`dia`,`Mes`) values
+('EVN001','Evento Mooc autoformativo “Habilidades Pedagógicas” (2da Edición)','El curso de habilidades pedagógicas es de naturaleza MOOC cuya acción formativa corresponde al desarrollo profesional que promueve el fortalecimiento de competencias de los docentes formadores de IESP/EESP públicos y privados.',2,'evento1.png','A partir del 2015, el Minedu ha implementado el uso de contraseñas para las consultas de expedientes ingresados por la mesa de partes. Si usted ingresó un documento, su contraseña se encuentra impresa en el Ticket que le ha sido entregado en las ventanillas de la Mesa de Partes.','http://www.minedu.gob.pe/superiorpedagogica/curso-de-habilidades-pedagogicas/','03','NOVIEMBRE');
 
 
 
@@ -113,25 +117,27 @@ INSERT INTO `paginas` (`idpagina`, `controlador`, `metodo`) VALUES
 -- Creando Tabla Usuarios
 drop table if exists  `usuario`;
 CREATE TABLE `usuario` (
-  `id_user` int(11) NOT NULL,
+  `id_user` int(11) AUTO_INCREMENT ,
   `login` char(20) NOT NULL,
   `clave` text NOT NULL,
   `id_tipo` int(11) NOT NULL,
   `descripcion` varchar(50) DEFAULT NULL,
-  `nombre` varchar(30) NOT NULL
+  `nombre` varchar(30) NOT NULL,
+   PRIMARY KEY (`id_user`) USING BTREE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `usuario` (`id_user`, `login`, `clave`, `id_tipo`, `descripcion`,`nombre`) VALUES
-(1, 'efvillan@gmail.com', '$2y$10$qyXrYZUtRFN8OGWiA48y0uRuH8ItGT42a7sXJE0.2P\/CrIT8eAPcS', 1, 'Jefe','Esteban');
+(0, 'efvillan@gmail.com', '$2y$10$qyXrYZUtRFN8OGWiA48y0uRuH8ItGT42a7sXJE0.2P\/CrIT8eAPcS', 1, 'Jefe','Esteban');
 
 
 -- tabla Accesos
 drop table if exists  `accesos`;
 CREATE TABLE `accesos` (
-  `idacceso` int(10) UNSIGNED NOT NULL,
+  `idacceso` int(10) AUTO_INCREMENT,
   `idpagina` int(10) UNSIGNED NOT NULL,
   `estado` smallint(5) UNSIGNED NOT NULL,
-  `id_user` int(11) NOT NULL
+  `id_user` int(11) NOT NULL,
+  PRIMARY KEY (`idacceso`) USING BTREE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
@@ -294,6 +300,10 @@ in v_nombre VARCHAR(50),
 in v_descripcion text,
 in v_estado int(10),
 in v_foto varchar(200),
+in v_obj text,
+in v_link text,
+in v_dia text,
+in v_mes text,
 out v_res bool)
 begin 
 declare exit handler for sqlexception
@@ -307,8 +317,8 @@ declare num  int;
 declare id char(6);
 set num=(Select count(*)+1 from evento);
 set id = concat(left('EVN00', 6 - char_length(num)),num);
-insert into evento(idevento,nombre,descripcion,estado,foto)values
-(id,upper(v_nombre),v_descripcion,v_estado,v_foto);
+insert into evento(`idevento`,`nombre`,`descripcion`,`estado`,`foto`,`obje`,`link`,`dia`,`Mes`)values
+(id,upper(v_nombre),v_descripcion,v_estado,v_foto,v_obj,v_link,v_dia,upper(v_mes));
 end;
 commit;
 set v_res=true;
@@ -327,7 +337,7 @@ DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_evento`()
 BEGIN
-select c.idevento f1, c.nombre f2, c.descripcion f3,  ev.descripcion f5, c.foto f6
+select c.idevento f1, c.nombre f2, c.descripcion f3,  ev.descripcion f5, c.foto f6, c.obje f7,c.link f8,c.dia f9, c.Mes f10
 from evento c inner join estado_evento ev on c.estado=ev.codestado;
 END $$
 
@@ -377,6 +387,50 @@ case when estado = 1 then 'Online'
 
 END$$
 
+
+-- Registrar Usuario
+
+-- Registrar un nuevo evento
+
+drop procedure if exists `sp_registrar_usuario`;
+
+delimiter $$
+
+create definer=`root`@`localhost` procedure `sp_registrar_usuario`(
+in v_login VARCHAR(20),
+in v_nombre VARCHAR(30),
+in v_pass text,
+out v_res bool)
+begin 
+declare exit handler for sqlexception
+begin rollback;
+set v_res=false;
+end;
+
+start transaction;
+begin
+
+insert into usuario(`id_user`, `login`, `clave`, `id_tipo`, `descripcion`,`nombre`)values
+('',v_login,v_pass,2,'cliente',v_nombre);
+end;
+start transaction;
+begin
+declare id char(6);
+set id = (Select count(*) from usuario);
+insert into accesos(`idacceso`, `idpagina`, `estado`, `id_user`)values
+('',1,1,id),
+('',3,1,id),
+('',4,1,id),
+('',6,1,id);
+
+end;
+
+commit;
+set v_res=true;
+
+end $$
+
+DELIMITER ;
 
 
 

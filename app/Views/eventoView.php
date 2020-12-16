@@ -11,9 +11,29 @@
 
 <div class="row">
 <div class="col text-right p-5">
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventoModal">
+
+
+<?php
+$session = \Config\Services::session();
+if ($session->has('usuario')) {
+    if ($session->get('idtipo') == 1) {
+        ?>
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventoModal">
 <i class="fas fa-plus-square"></i> AGREGAR
 </button>
+
+                                <?php
+
+    } else {
+        ?>
+
+
+                                <?php
+}
+}
+?>
+
+
 <button type="button" class="btn btn-primary" id="btn_mostrar">
 <i class="fas fa-eye"></i> MOSTRAR
 </button>
@@ -28,9 +48,9 @@
 
 
 
-  
-  
-  
+
+
+
 </div>
 </div>
 </section>
@@ -66,8 +86,8 @@
                   </div>
                   <div class="form-group">
                     <label for="estadoEvento">Estado</label>
-                   <?php  echo form_dropdown('estadoEvento',$comboestado,'#','class="selectpicker form-control" id="estadoEvento" data-live-search="true" title="Seleccionar estado" required'); ?>
-                   
+                   <?php echo form_dropdown('estadoEvento', $comboestado, '#', 'class="selectpicker form-control" id="estadoEvento" data-live-search="true" title="Seleccionar estado" required'); ?>
+
                   </div>
 
                   <div class="form-group">
@@ -77,8 +97,24 @@
                       <label class="custom-file-label" for="fotoEvento">Buscar Imagen .jpg, .jpeg o .png</label>
                     </div>
                   </div>
-    
-                 
+                  <div class="form-group">
+                    <label for="objEvento">Objetivo del Evento</label>
+                    <textarea class="form-control" id="objEvento" name="objEvento" rows="3" placeholder="Ingresar el obetivo del evento"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="linkEvento">Link del Evento</label>
+                    <input type="text" class="form-control" id="linkEvento" name="linkEvento" aria-describedby="nombreEventoHelp" placeholder="Ingresar el link del Evento">
+                  </div>
+                  <div class="form-group">
+                    <label for="diaEvento">Dia</label>
+                    <input type="text" class="form-control" id="diaEvento" name="diaEvento" aria-describedby="nombreEventoHelp" placeholder="Ingresar el dia del Evento">
+                  </div>
+                  <div class="form-group">
+                    <label for="mesEvento">Mes</label>
+                    <input type="text" class="form-control" id="mesEvento" name="mesEvento" aria-describedby="nombreEventoHelp" placeholder="Ingresar el Mes del Evento">
+                  </div>
+
+
                 <?=form_close();?>
 
       </div>
@@ -91,10 +127,10 @@
 
 
 
-<script src="<?= base_url() ?>/resources/js/evento.js"></script>
+<script src="<?=base_url()?>/resources/js/evento.js"></script>
 
 <script>
-    ruta = '<?= base_url() ?>'
+    ruta = '<?=base_url()?>'
 
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function() {

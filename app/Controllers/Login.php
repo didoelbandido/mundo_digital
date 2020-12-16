@@ -16,41 +16,7 @@ class Login extends BaseController
         return view('loginView') ;
     }
 
-    // Agregar Usuario
-    public function registrar()
-    {
-        return view('registrarUsuario');
-    }
-    
-
-    public function doRegistrar(){
-
-        
-        $validation = \Config\Services::validation();
-        $respuesta = array();
-
-        $input = $this->validate([
-            'user' => [
-                'rules' => 'required|min_length[5]|valid_email',
-                'errors' => [
-                    'required' => 'El Usuario no debe estar vacia',
-                    'min_length' => 'El Usuario debe ser mayor de  5 carateres',
-                ],
-            ],
-
-            'pass' => [
-                'rules' => 'required|min_length[5]|max_length[20]',
-                'errors' => [
-                    'required' => 'La contraseña no debe estar vacia',
-                    'min_length' => 'Contraseña debe ser mayor de 5 letras',
-                    'max_length' => 'Contraseña no debe exceder de 50 caracteres',
-                ],
-            ],
-
-        ]);
-
-    }
-
+   
 
     // Mudulo de Login
     public function doLogin()

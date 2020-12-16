@@ -43,21 +43,16 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Registrar Usuario</h1>
                                     </div>
-                                    <form class="user" action="<?php echo base_url(); ?>/login/doRegistrar">
+                                    
+                                    <div class="alert alert-danger text-center" role="alert" id="error">
+                                        <span id="msg_error"></span>
+                                    </div>
+                                    <div class="alert alert-success text-center" role="alert" id="succ">
+                                        <span id="msg_ok"></span>
+                                    </div>
                                     <?php $validation = \Config\Services::validation();?>
-                                    <!-- Error -->
-                                        <?php if ($validation->getError('user')) {?>
-                                            <div class='alert alert-danger mt-2'>
-                                            <?=$error = $validation->getError('user');?>
-                                            </div>
-                                        <?php }?>
-                                        <!-- Error -->
-                                        <?php if ($validation->getError('pass')) {?>
-                                            <div class='alert alert-danger mt-2'>
-                                            <?=$error = $validation->getError('pass');?>
-                                            </div>
-                                        <?php }?>
 
+                                <?=form_open_multipart('#', array('id' => 'frmUsuario', 'name' => 'frmUsuario'))?>
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="user" name="user" aria-describedby="emailHelp"
@@ -65,7 +60,7 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="name" name="name" aria-describedby="emailHelp"
+                                                id="nom" name="nom" aria-describedby="emailHelp"
                                                 placeholder="Ingrese su Nombre...">
                                         </div>
                                         <div class="form-group">
@@ -73,12 +68,15 @@
                                                 id="pass" name="pass" placeholder="Ingresar contraseña... ">
                                         </div>
                                                                               
-
-                                        <button class="btn btn-primary btn-user btn-block" type="submit">Registrar</button>
+                                        <button type="button" class="btn btn-primary btn-user btn-block" id="agregarUsuario" >Registrar</button>
+                                        
 
                                         <hr>
+                                        <?=form_close();?>
+                                    
+<!-- a -->
 
-                                    </form>
+
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="<?php echo base_url(); ?>/Login">Tienes Cuenta?, Ingresar!!</a>
@@ -105,8 +103,21 @@
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="<?php echo base_url(); ?>/resources/js/login.js"></script>
+    <script src="<?= base_url() ?>/resources/js/usuario.js"></script>
+
+<script>
+    ruta = '<?= base_url() ?>'
+
+   
+
+
+    $(document).ready(function() {
+       
+
+        doaction();
+
+    });
+</script>
 
 </body>
 

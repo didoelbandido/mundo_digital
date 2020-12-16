@@ -11,9 +11,27 @@
 
 <div class="row">
 <div class="col text-right p-5">
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cursoModal">
-<i class="fas fa-plus-square"></i> AGREGAR
-</button>
+<?php
+$session = \Config\Services::session();
+if ($session->has('usuario')) {
+    if ($session->get('idtipo') == 1) {
+        ?>
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cursoModal">
+                              <i class="fas fa-plus-square"></i> AGREGAR
+                              </button>
+
+                                <?php
+
+    } else {
+        ?>
+
+
+                                <?php
+}
+}
+?>
+
+
 <button type="button" class="btn btn-primary" id="btn_mostrar">
 <i class="fas fa-eye"></i> MOSTRAR
 </button>

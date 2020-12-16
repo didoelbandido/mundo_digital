@@ -77,7 +77,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="<?php echo base_url(); ?>/Login/registrar">No tienes cuenta?, Registrate!!</a>
+                                        <a class="small" href="<?php echo base_url(); ?>/Usuario">No tienes cuenta?, Registrate!!</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="<?php echo base_url(); ?>">Regresar a la pagina Inicial!</a>

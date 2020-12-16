@@ -25,17 +25,17 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">EVENTOS</h2>
-                    <h3 class="section-subheading text-muted">Evento mas proximo "Tranformacion Digital" </h3>
+                    <h3 class="section-subheading text-muted">Los Eventos mas Actuales</h3>
                 </div>
                 <ul class="timeline">
                     <li>
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="<?php echo base_url(); ?>/resources/assets/img/about/1.jpg" alt="" /></div>
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="<?php echo base_url(); ?>/resources/upload/curso03.png" alt="" /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h4>Martes 22 de Setiembre</h4>
-                                <h4 class="subheading">Reconocimiento Digital</h4>
+                                <h4> 03 de Noviembre</h4>
+                                <h4 class="subheading">Evento Mooc autoformativo “Habilidades Pedagógicas” (2da Edición)</h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+                            <div class="timeline-body"><p class="text-muted">El curso de habilidades pedagógicas es de naturaleza MOOC cuya acción formativa corresponde al desarrollo profesional que promueve el fortalecimiento de competencias de los docentes formadores de IESP/EESP públicos y privados.</p></div>
                         </div>
                     </li>
                     <li class="timeline-inverted">

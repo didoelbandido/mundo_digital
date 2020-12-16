@@ -71,7 +71,7 @@
 
 <?php 
  $session = \Config\Services::session(); 
- if($session->has('usuario')){
+ if($session->has('usuario') &&  $session->get('idtipo') == 1){
 ?>
 <section class="page-section ">
 

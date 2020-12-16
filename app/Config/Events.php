@@ -53,7 +53,7 @@ Events::on('post_controller_constructor', function () {
     $class = strtoupper($router->controllerName()); //Class llamada
     $method = strtoupper($router->methodName()); //metodo llamado
     $session = \Config\Services::session();
-    $nocontrolados = array('\APP\CONTROLLERS\HOME', '\APP\CONTROLLERS\LOGIN', '\APP\CONTROLLERS\ERRORACCESO', '\APP\CONTROLLERS\CONTACTANOS','\APP\CONTROLLERS\SOMOS');
+    $nocontrolados = array('\APP\CONTROLLERS\HOME', '\APP\CONTROLLERS\LOGIN', '\APP\CONTROLLERS\ERRORACCESO', '\APP\CONTROLLERS\CONTACTANOS','\APP\CONTROLLERS\SOMOS','\APP\CONTROLLERS\USUARIO');
     if (!in_array($class, $nocontrolados)) {
         if (!$session->has('usuario')) {
             $jus = base_url() . '/login/index';
