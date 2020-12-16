@@ -88,6 +88,58 @@ insert into `evento` (`idevento`,`nombre`,`descripcion`,`estado`,`foto`) values
 
 
 
+-- Creando tabla accesso
+drop table if exists  `paginas`;
+CREATE TABLE `paginas` (
+  `idpagina` int(10) UNSIGNED NOT NULL,
+  `controlador` varchar(250) NOT NULL,
+  `metodo` varchar(250) NOT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `paginas` (`idpagina`, `controlador`, `metodo`) VALUES
+(1, 'curso', 'index'),
+(2, 'curso', 'doSave'),
+(3, 'curso', 'doList'),
+(4, 'evento', 'index'),
+(5, 'evento', 'doSave'),
+(6, 'evento', 'doList');
+
+
+-- Creando Tabla Usuarios
+drop table if exists  `usuario`;
+CREATE TABLE `usuario` (
+  `id_user` int(11) NOT NULL,
+  `login` char(20) NOT NULL,
+  `clave` text NOT NULL,
+  `id_tipo` int(11) NOT NULL,
+  `descripcion` varchar(50) DEFAULT NULL,
+  `nombre` varchar(30) NOT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `usuario` (`id_user`, `login`, `clave`, `id_tipo`, `descripcion`,`nombre`) VALUES
+(1, 'efvillan@gmail.com', '$2y$10$qyXrYZUtRFN8OGWiA48y0uRuH8ItGT42a7sXJE0.2P\/CrIT8eAPcS', 1, 'Jefe','Esteban');
+
+
+-- tabla Accesos
+drop table if exists  `accesos`;
+CREATE TABLE `accesos` (
+  `idacceso` int(10) UNSIGNED NOT NULL,
+  `idpagina` int(10) UNSIGNED NOT NULL,
+  `estado` smallint(5) UNSIGNED NOT NULL,
+  `id_user` int(11) NOT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `accesos` (`idacceso`, `idpagina`, `estado`, `id_user`) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 1),
+(3, 3, 1, 1),
+(4, 4, 1, 1),
+(5, 5, 1, 1),
+(6, 6, 1, 1);
+
+
+
 -- Procedimientos almacenados
 
 -- Listar mensajes
@@ -275,8 +327,31 @@ END $$
 DELIMITER ;
 
 
+-- Validar Usuario
+DROP PROCEDURE IF EXISTS `sp_validarUsuario`;
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validarUsuario` (IN `v_user` CHAR(20), IN `v_clave` TEXT)  BEGIN
+select id_user v1, login v2, clave v3,id_tipo v4, descripcion v5, nombre v6 from  usuario
+
+where login=v_user;
+
+END $$
+
+DELIMITER ;
 
 
+-- Listar acceso
+DROP PROCEDURE IF EXISTS `sp_listar_accesos`;
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_accesos` (IN `v_id_user` INT)  BEGIN
+select p.idpagina v1 ,concat
+(p.controlador,p.metodo) v2
+from accesos a inner join paginas p on a.idpagina=p.idpagina where a.id_user=v_id_user and a.estado=1;
+END $$
 
 
 

@@ -54,7 +54,25 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Curso">Cursos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Evento">Eventos</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Contactanos">Comentarios</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/IniciarSesion">Iniciar Sesion</a></li>
+
+                        </a></li>
+                        <li class="nav-item">
+                        <?php
+						  $session = \Config\Services::session(); 
+						   if($session->has('usuario')){
+							 	
+                                 ?>
+                             <a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/login/cerrarsesion"><?php echo $session->get('nom'); ?> &nbsp;&nbsp;Salir</a>
+							 		
+						 <?php
+						  }	else{
+                              ?>
+                            <a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/login/index">Iniciar</a>  
+					
+						  <?php
+						  } 	
+						  ?>
+                        </li>
                     </ul>
                 </div>
             </div>
