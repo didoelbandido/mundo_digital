@@ -26,13 +26,11 @@ class Curso extends BaseController
 
         $input = $this->validate([
             'nombreCurso' => [
-                'rules' => 'required|alpha_space',
+                'rules' => 'required',
                 'errors' => [
-                    'required' => 'Debe ingresar un nombre del curso.',
-                    'alpha_space' => 'El nombre solo debe contener letras',
+                    'required' => 'Debe ingresar un nombre del curso.'
                 ],
-            ]
-            ,
+            ],
             'desCurso' => [
                 'rules' => 'required|min_length[20]',
                 'errors' => [
@@ -41,13 +39,7 @@ class Curso extends BaseController
 
                 ],
             ],
-            'docenteCurso' => [
-                'rules' => 'required|alpha_space',
-                'errors' => [
-                    'required' => 'Debe ingresar un nombre del docente del curso.',
-                    'alpha_space' => 'El nombre solo debe contener letras',
-                ],
-            ],
+            
             'estadoCurso' => [
                 'rules' => 'required|numeric',
                 'errors' => [
@@ -55,6 +47,7 @@ class Curso extends BaseController
                     'numeric' => 'Solo se acepta numeros',
                 ],
             ],
+            
             'fotoCurso' => [
                 'uploaded[fotoCurso]',
                 'mime_in[fotoCurso,image/jpg,image/jpeg,image/png]',
@@ -65,6 +58,37 @@ class Curso extends BaseController
                     'max_size' => 'La imagen nodebe exceder de 1mb',
                 ],
             ],
+            'nivelCurso' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Debe ingresar el estado del curso'
+                ],
+            ],
+            'objCurso' => [
+                'rules' => 'required|min_length[10]',
+                'errors' => [
+                    'required' => 'Debe Ingresar un descripcion del curso',
+                    'min_length' => 'Como minimo debe tener mas de 10 caracteres el objetivo del curso',
+
+                ],
+            ],
+            'convCurso' => [
+                'rules' => 'required|min_length[10]',
+                'errors' => [
+                    'required' => 'Debe Ingresar un descripcion del curso',
+                    'min_length' => 'Como minimo debe tener mas de 10 caracteres la conavalidacion del curso',
+
+                ],
+            ],
+            'linkCurso' => [
+                'rules' => 'required|min_length[5]',
+                'errors' => [
+                    'required' => 'Debe Ingresar un descripcion del curso',
+                    'min_length' => 'Como minimo debe tener mas de 5 caracteres el link del curso',
+
+                ],
+            ],
+
         ]);
 
         if (!$input) {
@@ -74,13 +98,17 @@ class Curso extends BaseController
             $req = \Config\Services::request();
             $nombreCurso = $req->getPostGet('nombreCurso');
             $desCurso = $req->getPostGet('desCurso');
-            $docenteCurso = $req->getPostGet('docenteCurso');
             $estadoCurso = $req->getPostGet('estadoCurso');
             $img = $this->request->getFile('fotoCurso');
             $fot = $img->getRandomName();
             $img->move(ROOTPATH . 'resources/upload', $fot);
+            $nivelCurso = $req->getPostGet('nivelCurso');
+            $objCurso = $req->getPostGet('objCurso');
+            $convCurso = $req->getPostGet('convCurso');
+            $linkCurso = $req->getPostGet('linkCurso');
+            
             // Orden de la data del procedimiento almacenado
-            $data = array($nombreCurso, $desCurso, $docenteCurso, $estadoCurso, $fot);
+            $data = array($nombreCurso, $desCurso, $estadoCurso, $fot,$nivelCurso,$objCurso,$convCurso,$linkCurso );
             // Llamando al modelo
             $modelo = new CursoModel($db);
 
@@ -113,15 +141,15 @@ class Curso extends BaseController
             $cadena .= '                        <a class="portfolio-link" data-toggle="modal" href="#portfolio' . $row['f1'] . '">';
 
             if ($row['f6'] == null) {
-                $cadena .= '                        <img class="img-fluid" src="' . base_url() . '/resources/upload/logo_banner.png' . '" alt="imagen_del_curso" />';
+                $cadena .= '                        <img class="img-fluid" width="202" height="58" src="' . base_url() . '/resources/upload/logo_banner.png' . '" alt="imagen_del_curso" />';
             } else {
-                $cadena .= '                        <img class="img-fluid" src="' . base_url() . '/resources/upload/' . $row['f6'] . '" alt="imagen_del_curso" />';
+                $cadena .= '                        <img class="img-fluid" width="202" height="58" src="' . base_url() . '/resources/upload/' . $row['f6'] . '" alt="imagen_del_curso" />';
             }
 
             $cadena .= '                       </a>';
             $cadena .= '                          <div class="portfolio-caption">';
             $cadena .= '                               <div class="portfolio-caption-heading">' . $row['f2'] . '</div>';
-            $cadena .= '                             <div class="portfolio-caption-subheading text-muted">Avanzado</div>'; //cambiar por la columna correspondiente con la nueva db
+            $cadena .= '                             <div class="portfolio-caption-subheading text-muted">' . $row['f5'] . '</div>'; //cambiar por la columna correspondiente con la nueva db
             $cadena .= '                         </div>';
             $cadena .= '                     </div>';
             $cadena .= '             </div>';
@@ -133,19 +161,25 @@ class Curso extends BaseController
             $cadena .= '                                      <div class="row justify-content-center">';
             $cadena .= '                                         <div class="col-lg-8">';
             $cadena .= '                                              <div class="modal-body">';
-            $cadena .= '                                                  <h2 class="text-uppercase">' . $row['f2'] . '</h2>';
-            $cadena .= '                                                 <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>'; //cambiar por la columna correspondiente con la nueva db
+            $cadena .= '                                                  <h2 class="text-uppercase ">' . $row['f2'] . '</h2>';
+        
+
             if ($row['f6'] == null) {
                 $cadena .= '                                                <img class="img-fluid d-block mx-auto" src="' . base_url() . '/resources/upload/logo_banner.png' . '" alt="" />';
             } else {
                 $cadena .= '                                                <img class="img-fluid d-block mx-auto" src="' . base_url() . '/resources/upload/' . $row['f6'] . '" alt="" />';
             }
-
-            $cadena .= '                                                 <p>' . $row['f3'] . '</p>';
+            $cadena .= '                                                  <h3>Descripción del curso</h3> <hr>';
+            $cadena .= '                                                 <p class="text-justify">' . $row['f3'] . '</p>';
+            $cadena .= '                                                  <h3>¿Cuál es el objetivo del curso?</h3> <hr>';
+            $cadena .= '                                                 <p class="text-justify">' . $row['f7'] . '</p>';
+            $cadena .= '                                                  <h3>¿Cómo se realiza el proceso de convalidación?</h3> <hr>';
+            $cadena .= '                                                 <p class="text-justify">' . $row['f8'] . '</p>';
+            $cadena .= '                                                  <h3>Link del Curso</h3> <hr>';
+            $cadena .= '                                                 <p class="text-justify"><a href='.$row['f9'].'>' . $row['f9'] . '</a></p>';
             $cadena .= '                                                  <ul class="list-inline">';
-            $cadena .= '                                                    <li>Date: January 2020</li>'; //cambiar con la nueva db
-            $cadena .= '                                                    <li>Docente: ' . $row['f4'] . '</li>';
-            $cadena .= '                                                    <li>Category: Branding</li>'; //cambiar con la nueva db
+            $cadena .= '                                                    <li>Nivel del curso: '.$row['f5'].'</li>'; //cambiar con la nueva db
+            $cadena .= '                                                    <li>Tipo de Curso: ' . $row['f4'] . '</li>';
             $cadena .= '                                                </ul>';
             $cadena .= '                                                <button class="btn btn-primary" data-dismiss="modal" type="button">';
             $cadena .= '                                                    <i class="fas fa-times mr-1"></i>';

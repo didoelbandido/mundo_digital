@@ -21,32 +21,53 @@ use CodeIgniter\Exceptions\FrameworkException;
  */
 
 Events::on('pre_system', function () {
-	if (ENVIRONMENT !== 'testing')
-	{
-		if (ini_get('zlib.output_compression'))
-		{
-			throw FrameworkException::forEnabledZlibOutputCompression();
-		}
+    if (ENVIRONMENT !== 'testing') {
+        if (ini_get('zlib.output_compression')) {
+            throw FrameworkException::forEnabledZlibOutputCompression();
+        }
 
-		while (ob_get_level() > 0)
-		{
-			ob_end_flush();
-		}
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
 
-		ob_start(function ($buffer) {
-			return $buffer;
-		});
-	}
+        ob_start(function ($buffer) {
+            return $buffer;
+        });
+    }
 
-	/*
-	 * --------------------------------------------------------------------
-	 * Debug Toolbar Listeners.
-	 * --------------------------------------------------------------------
-	 * If you delete, they will no longer be collected.
-	 */
-	if (ENVIRONMENT !== 'production')
-	{
-		Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
-		Services::toolbar()->respond();
-	}
+    /*
+     * --------------------------------------------------------------------
+     * Debug Toolbar Listeners.
+     * --------------------------------------------------------------------
+     * If you delete, they will no longer be collected.
+     */
+    if (ENVIRONMENT !== 'production') {
+        Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+        Services::toolbar()->respond();
+    }
+});
+
+Events::on('post_controller_constructor', function () {
+
+    $router = service('router');
+    $class = strtoupper($router->controllerName()); //Class llamada
+    $method = strtoupper($router->methodName()); //metodo llamado
+    $session = \Config\Services::session();
+    $nocontrolados = array('\APP\CONTROLLERS\HOME', '\APP\CONTROLLERS\LOGIN', '\APP\CONTROLLERS\ERRORACCESO', '\APP\CONTROLLERS\CONTACTANOS','\APP\CONTROLLERS\SOMOS');
+    if (!in_array($class, $nocontrolados)) {
+        if (!$session->has('usuario')) {
+            $jus = base_url() . '/login/index';
+            header('Location: ' . $jus);
+            exit();
+        } else {
+            $paginas = $session->get('paginas');
+            if (!in_array($class . $method, $paginas)) {
+                $jus = base_url() . '/ErrorAcceso/index';
+                header('Location: ' . $jus);
+                exit();
+            }
+
+        }
+    }
+
 });

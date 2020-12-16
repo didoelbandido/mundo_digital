@@ -41,9 +41,9 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Inicio de Session</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Registrar Usuario</h1>
                                     </div>
-                                    <form class="user" action="<?php echo base_url(); ?>/login/doLogin">
+                                    <form class="user" action="<?php echo base_url(); ?>/login/doRegistrar">
                                     <?php $validation = \Config\Services::validation();?>
                                     <!-- Error -->
                                         <?php if ($validation->getError('user')) {?>
@@ -64,20 +64,24 @@
                                                 placeholder="Ingrese Correo...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="pass" name="pass" placeholder="Contraseña ">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="name" name="name" aria-describedby="emailHelp"
+                                                placeholder="Ingrese su Nombre...">
                                         </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                id="pass" name="pass" placeholder="Ingresar contraseña... ">
+                                        </div>
+                                                                              
 
-                                       
-
-                                        <button class="btn btn-primary btn-user btn-block" type="submit">Ingresar</button>
+                                        <button class="btn btn-primary btn-user btn-block" type="submit">Registrar</button>
 
                                         <hr>
 
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="<?php echo base_url(); ?>/Login/registrar">No tienes cuenta?, Registrate!!</a>
+                                        <a class="small" href="<?php echo base_url(); ?>/Login">Tienes Cuenta?, Ingresar!!</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="<?php echo base_url(); ?>">Regresar a la pagina Inicial!</a>

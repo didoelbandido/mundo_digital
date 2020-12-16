@@ -14,31 +14,8 @@
                     <h2 class="section-heading text-uppercase">CURSOS</h2>
                     <h3 class="section-subheading text-muted">Lo mejores cursos de la web.</h3>
                 </div>
-                <div class="row ">
-                    <div class="col-sm-4 p-5 text-center">
-                    <h3>PRESENCIAL</h3>
-                    <div id="circulo" class="bg-primary  mx-auto ">
-                        <p><i class="fas fa-users"></i></p>
-                        </div>
-                        <h3 class="p-3">25</h3>
-                    </div>
+                <div class="row" id="objCursos">
 
-                    <div class="col-sm-4 p-5 text-center">
-                    <h3>ONLINE</h3>
-                        <div id="circulo" class="bg-primary mx-auto ">
-                        <p><i class="fas fa-laptop-house"></i></p>
-
-                        </div>
-                        <h3 class="p-3">12</h3>
-
-                    </div>
-                    <div class="col-sm-4 p-5 text-center">
-                    <h3>LIBRO DIGITAL</h3>
-                    <div id="circulo" class="bg-primary mx-auto ">
-                        <p><i class="fas fa-atlas"></i></p>
-                        </div>
-                        <h3 class="p-3">14</h3>
-                    </div>
 
                 </div>
             </div>
@@ -310,3 +287,31 @@
             </div>
         </div>
         <!-- Bootstrap core JS-->
+
+        <script>
+    ruta = '<?=base_url()?>'
+
+
+
+
+    $(document).ready(function() {
+
+
+        $.ajax({
+
+            url: ruta+'/Home/doList',
+            type: 'POST',
+            dataType:'JSON',
+            data: {},
+            success: function(e)
+            {
+            console.log(e)
+
+            $('#objCursos').html(e.data)
+
+            }
+            })
+
+
+    });
+</script>

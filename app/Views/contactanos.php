@@ -68,54 +68,66 @@
     </div>
 </section>
 
+
+<?php 
+ $session = \Config\Services::session(); 
+ if($session->has('usuario')){
+?>
 <section class="page-section ">
 
-    <div class="container">
+<div class="container">
 
-        <div class="card">
-            <div class="card-header  ">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h1>Lista de Comentarios</h1>
-                    </div>
-                    <div class="col-md-4  align-self-center text-center ">
-                        <button type="button" name="btnMostrar" id="btnMostrar" class=" btn btn-primary ">Mostrar</button>
-                        <button type="button" name="btnOcultar" id="btnOcultar" class="btn btn-danger">Ocultar</button>
-
-                    </div>
-
+    <div class="card">
+        <div class="card-header  ">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1>Lista de Comentarios</h1>
                 </div>
-            </div>
-            <div class="card-body">
-
-                <div class="table-responsive" id="panelTbl">
-                    <table id="tblComent" class="table table-striped table-bordered" style="width:100%" data-sort-name="f2" data-show-toggle="true" data-search="true" data-pagination="true">
-                        <thead>
-                            <tr>
-                                <th data-field="state" data-radio="true"></th>
-                                <th data-field="f1">ID Mensaje</th>
-                                <th data-field="f2" data-sortable="true">Nombre</th>
-                                <th data-field="f3">E-MAIL</th>
-                                <th data-field="f4">Celular</th>
-                                <th data-field="f5">Mensaje</th>
-                            </tr>
-                        </thead>
-
-                        <div class="alert alert-danger text-center" role="alert" id="tbl_error">
-                            <span id="tbl_msg_error"></span>
-                        </div>
-
-                    </table>
-
-
+                <div class="col-md-4  align-self-center text-center ">
+                    <button type="button" name="btnMostrar" id="btnMostrar" class=" btn btn-primary ">Mostrar</button>
+                    <button type="button" name="btnOcultar" id="btnOcultar" class="btn btn-danger">Ocultar</button>
 
                 </div>
 
             </div>
         </div>
+        <div class="card-body">
+
+            <div class="table-responsive" id="panelTbl">
+                <table id="tblComent" class="table table-striped table-bordered" style="width:100%" data-sort-name="f2" data-show-toggle="true" data-search="true" data-pagination="true">
+                    <thead>
+                        <tr>
+                            <th data-field="state" data-radio="true"></th>
+                            <th data-field="f1">ID Mensaje</th>
+                            <th data-field="f2" data-sortable="true">Nombre</th>
+                            <th data-field="f3">E-MAIL</th>
+                            <th data-field="f4">Celular</th>
+                            <th data-field="f5">Mensaje</th>
+                        </tr>
+                    </thead>
+
+                    <div class="alert alert-danger text-center" role="alert" id="tbl_error">
+                        <span id="tbl_msg_error"></span>
+                    </div>
+
+                </table>
+
+
+
+            </div>
+
+        </div>
     </div>
+</div>
 
 </section>
+<?php
+ }
+else
+{
+
+}
+?>
 
 <!-- Poner Estatico el navBar -->
 

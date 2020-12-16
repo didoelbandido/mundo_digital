@@ -36,24 +36,29 @@ insert into `estado_curso` (`codestado`,`descripcion`) values
 
 
 
+
 -- Creando tabla Curso
 drop table if exists  `curso`;
 create table `curso`(
 `idcurso` char(6) not null unique,
-`nombre` varchar(50) not null,
+`nombre` text not null,
 `descripcion` text not null,
-`docente` varchar(50) not null,
 `estado` int(10) unsigned NOT NULL,
 `foto` varchar(200) null,
+`nivel` varchar(45) NOT NULL,
+`obje` text not null,
+`conva` text not null,
+`link` text not null,
  PRIMARY KEY (`idcurso`) USING BTREE,
  KEY `FK_curso_1` (`estado`),
 CONSTRAINT `FK_curso_1` FOREIGN KEY (`estado`) REFERENCES `estado_curso` (`codestado`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-insert into `curso` (`idcurso`,`nombre`,`descripcion`,`docente`,`estado`,`foto`) values
-('CUR001','Curso de Excel','Es un curso que te practico','Juan Pereaz',1,null),
-('CUR002','Curso de PHP','Es un curso que teorico','Lorem',3,null),
-('CUR003','Photoshop UCV','Es un curso que te practico, necesario tableta grafica','Juan Lurdes',2,null);
+insert into `curso` (`idcurso`,`nombre`,`descripcion`,`estado`,`foto`,`nivel`,`obje`,`conva`,`link`) values
+('CUR001','Orientaciones para la ejecución del proceso de traslado de estudiantes de formación inicial docente de carreras profesionales a programas de estudios licenciados en EESP','El curso tiene la finalidad de brindar a las Escuelas de Educación Superior Pedagógica (EESP) la guía necesaria para ejecutar con efectividad los procesos de traslado a programas de estudios licenciados y convalidación respectiva de sus estudiantes de Formación Inicial Docente que al momento del licenciamiento de la institución se encuentren desarrollando currículos de carreras profesionales; ello, en el marco de lo regulado por la Vigésima Cuarta Disposición Complementaria Transitoria del Reglamento la Ley N° 30512, Ley de Institutos y Escuelas de Educación Superior y de la Carrera Pública de sus Docentes, aprobado por Decreto Supremo N° 010-2017-MINEDU.',1,'curso2.png','Medio','Proceso académico mediante el cual un estudiante que culmina estudios entre el I al VII ciclo de acuerdo al plan de estudios de una carrera profesional pasa a continuar con su formación académica de acuerdo al plan de estudios de un programa de estudios licenciado. Para el efecto su registro académico es sujeto de modificaciones en base a lo establecido en las tablas de convalidación y a decisiones de la EESP sobre el proceso de aprobación de los cursos reprogramados y pendientes que surgen como resultado del proceso de convalidación, que son aprobadas mediante resolución directoral de la EESP y respaldadas con actas de evaluación.','Proceso académico mediante el cual un estudiante que culmina estudios entre el I al VII ciclo de acuerdo al plan de estudios de una carrera profesional pasa a continuar con su formación académica de acuerdo al plan de estudios de un programa de estudios licenciado. Para el efecto su registro académico es sujeto de modificaciones en base a lo establecido en las tablas de convalidación y a decisiones de la EESP sobre el proceso de aprobación de los cursos reprogramados y pendientes que surgen como resultado del proceso de convalidación, que son aprobadas mediante resolución directoral de la EESP y respaldadas con actas de evaluación.','http://www.minedu.gob.pe/superiorpedagogica/producto/orientaciones-convalidacion-de-carrera-a-programa-en-eesp/'),
+('CUR002','Curso virtual autoformativo de tecnología de la información y comunicación para la formación no presencial para docentes nombrados de IESP','El curso de tecnología de la información y comunicación es una acción formativa correspondiente al desarrollo profesional que promueve el fortalecimiento de competencias digitales haciendo uso de las TIC.',3,'curso1.jpg','Bajo','Promover el fortalecimiento de las capacidades en el uso de las TIC para el desempeño profesional en la educación no presencial; para los docentes de Institutos de Educación Superior Pedagógica públicos.','No Especificada','https://docs.google.com/uc?export=download&id=1uorQJ7DMJXVYEXqrdQMM71vg4F4E-fTX'),
+('CUR003','Curso Mooc autoformativo “Habilidades Pedagógicas”','El curso de habilidades pedagógicas es de naturaleza MOOC cuya acción formativa corresponde al desarrollo profesional que promueve el fortalecimiento de competencias de los docentes formadores de IESP/EESP públicos y privados.',2,'logo_banner.png','Avanzado','Promover el fortalecimiento de las competencias y capacidades profesionales de los docentes formadores atendiendo a las necesidades formaticas, previamente identificadas.','El curso de habilidades pedagógicas está a cargo del Ministerio de Educacion.','http://www.minedu.gob.pe/superiorpedagogica/curso-de-habilidades-pedagogicas/');
+
 
 
 
@@ -216,9 +221,12 @@ delimiter $$
 create definer=`root`@`localhost` procedure `sp_registrar_curso`(
 in v_nombre VARCHAR(50),
 in v_descripcion text,
-in v_docente varchar(50),
 in v_estado int(10),
 in v_foto varchar(200),
+in v_nivel varchar(45),
+in v_obje text,
+in v_conva text,
+in v_link text,
 out v_res bool)
 begin 
 declare exit handler for sqlexception
@@ -232,8 +240,8 @@ declare num  int;
 declare id char(6);
 set num=(Select count(*)+1 from curso);
 set id = concat(left('CUR00', 6 - char_length(num)),num);
-insert into curso(idcurso,nombre,descripcion,docente,estado,foto)values
-(id,upper(v_nombre),v_descripcion,upper(v_docente),v_estado,v_foto);
+insert into curso(`idcurso`,`nombre`,`descripcion`,`estado`,`foto`,`nivel`,`obje`,`conva`,`link`)values
+(id,upper(v_nombre),v_descripcion,v_estado,v_foto,v_nivel,v_obje,v_conva,v_link );
 end;
 commit;
 set v_res=true;
@@ -252,7 +260,7 @@ DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_curso`()
 BEGIN
-select c.idcurso f1, c.nombre f2, c.descripcion f3, c.docente f4, ec.descripcion f5, c.foto f6
+select c.idcurso f1, c.nombre f2, c.descripcion f3,  ec.descripcion f4, c.foto f6, c.nivel f5, c.obje f7, c.conva f8, c.link f9
 from curso c inner join estado_curso ec on c.estado=ec.codestado;
 END $$
 
@@ -352,6 +360,24 @@ select p.idpagina v1 ,concat
 (p.controlador,p.metodo) v2
 from accesos a inner join paginas p on a.idpagina=p.idpagina where a.id_user=v_id_user and a.estado=1;
 END $$
+
+
+-- Listar Cursos Presencial,Online, Libro Digital
+DROP PROCEDURE IF EXISTS `sp_reporte_curso`;
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_reporte_curso` ()  BEGIN
+select case when estado = 1  then 'Online' 
+        when estado = 2 then 'Presencial' else 'Libro Digital' end as v1 ,count(*) as v2 from curso
+group by
+case when estado = 1 then 'Online' 
+		when estado = 2 then 'Presencial'
+        else 'Libro Digital' end;
+
+END$$
+
+
 
 
 

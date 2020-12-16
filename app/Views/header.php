@@ -51,8 +51,45 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Somos">Quienes Somos</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Curso">Cursos</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Evento">Eventos</a></li>
+
+                        <?php
+                            $session = \Config\Services::session();
+                            if($session->has('usuario'))
+                            {
+                            ?>
+                            <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Curso">Cursos</a>
+                            </li>
+                            <?php
+                            }
+                            else
+                            {
+                              ?>
+                              
+                              <?php
+                            }
+                            ?>
+                            
+                            <?php
+                                $session = \Config\Services::session();
+                                if($session->has('usuario'))
+                                {
+                                ?>
+                                <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Evento">Eventos</a>
+                                </li>
+                                <?php
+                                }
+                                else
+                                {
+                                ?>
+                                
+                                <?php
+                                }
+                                ?>
+                        
+                        
+                            
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/Contactanos">Comentarios</a></li>
 
                         </a></li>
@@ -62,7 +99,7 @@
 						   if($session->has('usuario')){
 							 	
                                  ?>
-                             <a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/login/cerrarsesion"><?php echo $session->get('nom'); ?> &nbsp;&nbsp;Salir</a>
+                             <a class="nav-link js-scroll-trigger" href="<?php echo base_url();?>/login/cerrarsesion"><span style="color:#0a0a0a" ><?php echo $session->get('nom'); ?></span> &nbsp;&nbsp;Salir</a>
 							 		
 						 <?php
 						  }	else{

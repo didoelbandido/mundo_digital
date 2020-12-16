@@ -28,9 +28,9 @@
 
 
 
-  
-  
-  
+
+
+
 </div>
 </div>
 </section>
@@ -65,13 +65,9 @@
                     <textarea class="form-control" id="desCurso" name="desCurso" rows="3" placeholder="Ingresar una descripcion concisa"></textarea>
                   </div>
                   <div class="form-group">
-                    <label for="docenteCurso">Docente</label>
-                    <input type="text" class="form-control" id="docenteCurso" name="docenteCurso" aria-describedby="docenteCursoHelp" placeholder="Ingresar nombre del docente que guaira el curso">
-                  </div>
-                  <div class="form-group">
                     <label for="estadoCurso">Estado</label>
-                   <?php  echo form_dropdown('estadoCurso',$comboestado,'#','class="selectpicker form-control" id="estadoCurso" data-live-search="true" title="Seleccionar estado" required'); ?>
-                   
+                   <?php echo form_dropdown('estadoCurso', $comboestado, '#', 'class="selectpicker form-control" id="estadoCurso" data-live-search="true" title="Seleccionar estado" required'); ?>
+
                   </div>
 
                   <div class="form-group">
@@ -81,8 +77,30 @@
                       <label class="custom-file-label" for="fotoCurso">Buscar Imagen .jpg, .jpeg o .png</label>
                     </div>
                   </div>
-    
-                 
+
+                  <div class="form-group">
+                    <label for="nivelCurso">nivel</label>
+                    <select class="form-control" id="nivelCurso" name="nivelCurso">
+                      <option value="">--- Escoja el nivel del Curso ---</option>
+                      <option value="Bajo">Bajo</option>
+                      <option value="Medio">Medio</option>
+                      <option value="Avanzado">Avanzado</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="objCurso">Objetivos del Curso</label>
+                    <textarea class="form-control" id="objCurso" name="objCurso" rows="3" placeholder="Ingresar los objetivos del curso"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="convCurso">Convalidacion del Curso</label>
+                    <textarea class="form-control" id="convCurso" name="convCurso" rows="3" placeholder="Explicacion de la Convalidacion del Curso"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="linkCurso">Link</label>
+                    <textarea class="form-control" id="linkCurso" name="linkCurso" rows="3" placeholder="Link del curso"></textarea>
+                  </div>
+
+
                 <?=form_close();?>
 
       </div>
@@ -95,10 +113,10 @@
 
 
 
-<script src="<?= base_url() ?>/resources/js/curso.js"></script>
+<script src="<?=base_url()?>/resources/js/curso.js"></script>
 
 <script>
-    ruta = '<?= base_url() ?>'
+    ruta = '<?=base_url()?>'
 
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function() {

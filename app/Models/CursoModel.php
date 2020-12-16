@@ -9,7 +9,7 @@ class CursoModel extends Model
     {
         $db  = \Config\Database::connect();
         $db->transStart();
-        $qry= "CALL sp_registrar_curso(?,?,?,?,?,@s)";
+        $qry= "CALL sp_registrar_curso(?,?,?,?,?,?,?,?,@s)";
         $rel = $db->query($qry,$data);
         $respuesta = $db->query('select @s as out_param');
         $db -> transComplete();
